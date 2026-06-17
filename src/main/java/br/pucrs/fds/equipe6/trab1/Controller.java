@@ -1,0 +1,241 @@
+package br.pucrs.fds.equipe6.trab1;
+
+import java.util.Date;
+import java.util.List;
+
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+@RequestMapping("/acmespiele")
+public class Controller{
+    private Clientela clientes;
+    private Jogos jogos;
+    private Contratos contratos;
+    private Categorias categorias;
+
+    public Controller() {
+        clientes = new Clientela();
+        clientes.addCliente(new Cliente("Sofia Maldener",    "111.111.111-11", "sofia.maldener@pucrs.br",    new Date(), "senha123"));
+        clientes.addCliente(new Cliente("Lucas Pereira",     "222.222.222-22", "lucas.pereira@gmail.com",     new Date(), "lucas@456"));
+        clientes.addCliente(new Cliente("Ana Beatriz Lima",  "333.333.333-33", "ana.lima@hotmail.com",         new Date(),  "anab789"));
+        clientes.addCliente(new Cliente("Carlos Souza",      "444.444.444-44", "carlos.souza@outlook.com",    new Date(), "carl#321"));
+        clientes.addCliente(new Cliente("Fernanda Oliveira", "555.555.555-55", "fernanda.oli@yahoo.com",      new Date(), "fern@000"));
+
+        categorias = new Categorias();
+        categorias.addCategoria(new Categoria(1, "Shooter", 100.00));
+        categorias.addCategoria(new Categoria(2, "RPG", 200.00));
+        categorias.addCategoria(new Categoria(3, "Luta", 50.50));
+        categorias.addCategoria(new Categoria(4, "Simulador", 300.99));
+        categorias.addCategoria(new Categoria(5, "Aventura", 150.00));
+
+        jogos = new Jogos();
+        jogos.addJogo(new Jogo(1, "The Last of Us",       2013, 199.90, categorias.getCategoriaPorNome("Aventura")));
+        jogos.addJogo(new Jogo(2, "Red Dead Redemption",  2018, 249.99, categorias.getCategoriaPorNome("Aventura")));
+        jogos.addJogo(new Jogo(3, "God of War",           2022, 1.00, categorias.getCategoriaPorNome("Aventura")));
+        jogos.addJogo(new Jogo(4, "Cyberpunk 2077",       2020, 2.00, categorias.getCategoriaPorNome("Shooter")));
+        jogos.addJogo(new Jogo(5, "Elden Ring",           2022, 349.90, categorias.getCategoriaPorNome("RPG")));
+        jogos.addJogo(new Jogo(6, "Fifa",                 2016, 150.00, categorias.getCategoriaPorNome("Simulador")));
+        jogos.addJogo(new Jogo(7, "CS 2",                 2023, 349.90, categorias.getCategoriaPorNome("Shooter")));
+        jogos.addJogo(new Jogo(8, "EA FC 26",                 2026, 349.90, categorias.getCategoriaPorNome("Simulador")));
+        jogos.addJogo(new Jogo(9, "The Witcher 3",                 2015, 349.90, categorias.getCategoriaPorNome("RPG")));
+        jogos.addJogo(new Jogo(10, "GTA VI",                 2026, 349.90, categorias.getCategoriaPorNome("Shooter")));
+        jogos.addJogo(new Jogo(10, "THE SIMS",                 2025, 349.90, categorias.getCategoriaPorNome("Simulador")));
+
+
+        contratos = new Contratos();
+
+        // Contrato de God Of War
+        contratos.addContrato(
+            new Contrato(
+                1,
+                new Date(125, 10, 10), // 2025
+                3600,
+                clientes.getClientes().get(0),
+                jogos.getJogos().get(2),
+                new Uso(
+                    1,
+                    new Date(126, 3, 1),  // abril 2026
+                    new Date(126, 3, 1),
+                    14,
+                    18
+                )
+            )
+        );
+        // Contrato de Elden Ring
+        contratos.addContrato(
+            new Contrato(
+                2,
+                new Date(126, 1, 15), // 2026
+                2400,
+                clientes.getClientes().get(1),
+                jogos.getJogos().get(4),
+                new Uso(
+                    2,
+                    new Date(126, 1, 15),
+                    new Date(126, 1, 20),
+                    9,
+                    12
+                )
+            )
+        );
+
+        //Contrato Obsoleto Red Dead
+        contratos.addContrato(
+            new Contrato(
+                3,
+                new Date(121, 2, 10), // 2021
+                1200,
+                clientes.getClientes().get(2),
+                jogos.getJogos().get(1),
+                new Uso(
+                    3,
+                    new Date(121, 2, 10),
+                    new Date(121, 2, 15),
+                    19,
+                    22
+                )
+            )
+        );
+        //Contrato The Last of Us Removido
+        contratos.addContrato(
+            new Contrato(
+                4,
+                new Date(118, 5, 5), // 2018
+                600,
+                clientes.getClientes().get(3),
+                jogos.getJogos().get(0),
+                new Uso(
+                    4,
+                    new Date(118, 5, 5),
+                    new Date(118, 5, 8),
+                    10,
+                    11
+                )
+            )
+        );
+    }
+
+    //endpoint 1: Consultar todos os clientes
+    @GetMapping("/listaclientes")
+        public List<Cliente> getClientes() {
+        return clientes.getClientes();
+    }
+
+    //endpoint 2: Consultar todos os jogos cadastrados
+    @GetMapping("/listajogos")
+    public List<Jogo> getJogos() {
+        return jogos.getJogos();
+    }
+
+    //endpoint 3: Consultar todos os contratos clientes, jogos e usos correspondentes
+    @GetMapping("/listacontratos")
+    public List<ContratoRespostaDTO> consultarContratos() {
+        return contratos.getContratos()
+            .stream()
+            .map(ContratoRespostaDTO::new)
+            .toList();
+    }
+
+    //endpoint 4: Consultar jogos por situação Disponivel, Contratado, Obsoleto ou Removido
+    @GetMapping("/consultarjogossituacao/{situacao}")
+    public List<Jogo> consultaJogoPorSituacao(@PathVariable String situacao) {
+        jogos.atualizarSituacaoJogos(contratos);
+        return jogos.consultaJogos(situacao);
+    }
+     //endpoint 5: Cadastrar novo contrato
+    @PostMapping("/cadastro/cadcontrato")
+    public boolean cadastrarContrato(@RequestBody @Valid CriaContratoDTO contratoDTO) {
+        return contratos.addContratoValidado(contratoDTO, clientes, jogos);
+    }
+
+    //endpoint 6: Cadastrar novo uso de contrato
+    @PostMapping("/cadastro/caduso")
+    public boolean cadastrarUso(@RequestBody UsoDTO usoDTO) {
+        Contrato contrato = contratos.buscarContratoPorId(usoDTO.getIdContrato());
+        if (contrato == null) return false;
+        List<Uso> usos = contrato.getUsos();
+        for (Uso uso : usos) {
+            if (uso.getNumero() == usoDTO.getNumero()) return false;
+        }
+        contrato.addUso(new Uso(usoDTO.getNumero(), usoDTO.getDataInicio(), usoDTO.getDataFim(), usoDTO.getHorarioInicio(), usoDTO.getHorarioFim()));
+        return true;
+    }
+
+    // Endpoint 7: Calcular o valor total de um contrato
+    @GetMapping("/consultatotalcontrato")
+    public double calculaValorContrato(@RequestParam int id) {
+        double valorTotal = 0;
+
+        Contrato c = contratos.buscarContratoPorId(id);
+        if (c == null) return 0;
+
+        double valorBase = c.getJogo().getCategoria().getValorMinimo();
+        double valorMinuto = c.getJogo().getValorMinuto();
+
+        List<Uso> usos = c.getUsos();
+
+        for (Uso u : usos) {
+            long minutos = u.getDuracaoMinutos();
+            valorTotal += valorBase + (valorMinuto * minutos);
+        }
+
+        return valorTotal;
+    }
+
+    // Endpoint 8: Calcula cobrança total de um cliente
+    @GetMapping("/consultatotalcliente")
+    public double consultaCobrancaPorCpf(@RequestParam String cpf) {
+        double valorTotal = 0;
+        List<Contrato> contratosCliente = contratos.getContratosPorCpf(cpf);
+
+        for (Contrato c : contratosCliente) {
+            double valorBase = c.getJogo().getCategoria().getValorMinimo();
+            double valorMinuto = c.getJogo().getValorMinuto();
+
+            for (Uso u : c.getUsos()) {
+                long minutos = u.getDuracaoMinutos();
+                double valorCalculado = valorBase + (minutos * valorMinuto);
+
+                if (valorCalculado > 500) {
+                    valorTotal += valorCalculado * 0.97;
+                } else {
+                    valorTotal += valorCalculado;
+                }
+            }
+        }
+        return valorTotal;
+    }
+
+    // Endpoint 9: Alterar a situação de um jogo
+    @PutMapping("/cadastro/atualizajogo/{codigo}/situacao/{status}")
+    public ResponseEntity<Jogo> alteraSituacaoJogo(@PathVariable int codigo, @PathVariable String status) {
+        Jogo j = jogos.buscaJogoCod(codigo);
+        if (j == null) return ResponseEntity.notFound().build();
+
+        Situacao situacao = Situacao.buscaPorNome(status);
+        if(situacao == null) return ResponseEntity.badRequest().build();
+
+        j.setSituacao(situacao);
+        return ResponseEntity.ok(j);
+    }
+
+    // Endpoint 10: Cancelar contrato logicamente
+    @DeleteMapping("/cadastro/cancelacontrato")
+    public boolean cancelarContrato(@RequestBody int id) {
+        Contrato contrato = contratos.buscarContratoPorId(id);
+        if (contrato == null) return false;
+        contrato.cancelar();
+        return true;
+    }
+}
