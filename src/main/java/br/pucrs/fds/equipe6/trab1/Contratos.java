@@ -35,7 +35,7 @@ public class Contratos {
                 .toList();
     }
 
-    //metodos que usei nos endpoints 5,6 e 10
+    //metodos que usei nos endpoints 5,6 e 10 (T1) agora 6,7,11 (TF)
 
     public Contrato buscarContratoPorId(int id) {
         return contratos.stream()
@@ -44,15 +44,20 @@ public class Contratos {
                 .orElse(null);
     }
 
-    public boolean addContratoValidado(CriaContratoDTO contratoDTO, Clientela clientes, Jogos jogos) {
-        if (buscarContratoPorId(contratoDTO.getId()) != null) return false; // id duplicado
+    //para CadastrarContratoUseCase.java na camada application
+    public boolean addContratoValidado(CriaContratoDTO contratoDTO, Clientela clientes, Jogos jogos, FormasPagamento formasPagamento) {
+        if (buscarContratoPorId(contratoDTO.getId()) != null) return false; 
 
         Cliente cliente = clientes.buscarClienteCPF(contratoDTO.getCpf());
         Jogo jogo = jogos.buscaJogoCod(contratoDTO.getCodigoJogo());
+        FormaPagamento formaPagamento = formasPagamento.buscaPorNum(contratoDTO.getNum());
 
-        if (cliente == null || jogo == null) return false;
+        if (cliente == null || jogo == null || formaPagamento == null) return false;
 
-        Contrato novo = new Contrato(contratoDTO.getId(), contratoDTO.getData(), contratoDTO.getPeriodo(), cliente, jogo);
+        // no tf jogo é exclusivo, só pode ter 1 contrato ativo por vez ent modifiquei 
+        if (jogo.estaContratado(this)) return false;
+
+        Contrato novo = new Contrato(contratoDTO.getId(), contratoDTO.getData(), contratoDTO.getPeriodo(), cliente, jogo, formaPagamento);
         contratos.add(novo);
         return true;
     }
