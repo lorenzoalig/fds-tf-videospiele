@@ -18,3 +18,14 @@
 /home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/Trab1Application.java
 /home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/Uso.java
 /home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/UsoDTO.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/repository/CategoriaRepository.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/repository/ClienteRepository.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/repository/ContratoRepository.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/repository/FormaPagamentoRepository.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/repository/JogoRepository.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/repository/MoedaRepository.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/usecase/AtualizaSituacaoJogoUseCase.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/usecase/AtualizarSituacaoJogosService.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/usecase/CalculaValorContratoUseCase.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/usecase/ConsultaCobrancaClienteUseCase.java
+/home/alice/Documents/FDS2/fds-tf-videospiele/src/main/java/br/pucrs/fds/equipe6/trab1/usecase/ConsultarJogosPorSituacaoUseCase.java
