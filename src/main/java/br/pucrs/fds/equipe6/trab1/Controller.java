@@ -26,11 +26,11 @@ public class Controller {
 
     public Controller() {
         clientes = new Clientela();
-        clientes.addCliente(new Cliente("Sofia Maldener",    "111.111.111-11", "sofia.maldener@pucrs.br",    new Date(), "senha123"));
-        clientes.addCliente(new Cliente("Lucas Pereira",     "222.222.222-22", "lucas.pereira@gmail.com",    new Date(), "lucas@456"));
-        clientes.addCliente(new Cliente("Ana Beatriz Lima",  "333.333.333-33", "ana.lima@hotmail.com",        new Date(), "anab789"));
-        clientes.addCliente(new Cliente("Carlos Souza",      "444.444.444-44", "carlos.souza@outlook.com",   new Date(), "carl#321"));
-        clientes.addCliente(new Cliente("Fernanda Oliveira", "555.555.555-55", "fernanda.oli@yahoo.com",     new Date(), "fern@000"));
+        clientes.addCliente(new Cliente(1L, "Sofia Maldener",    "111.111.111-11", "sofia.maldener@pucrs.br",    new Date(), "senha123"));
+        clientes.addCliente(new Cliente(2L, "Lucas Pereira",     "222.222.222-22", "lucas.pereira@gmail.com",    new Date(), "lucas@456"));
+        clientes.addCliente(new Cliente(3L, "Ana Beatriz Lima",  "333.333.333-33", "ana.lima@hotmail.com",        new Date(), "anab789"));
+        clientes.addCliente(new Cliente(4L, "Carlos Souza",      "444.444.444-44", "carlos.souza@outlook.com",   new Date(), "carl#321"));
+        clientes.addCliente(new Cliente(5L, "Fernanda Oliveira", "555.555.555-55", "fernanda.oli@yahoo.com",     new Date(), "fern@000"));
 
         categorias = new Categorias();
         categorias.addCategoria(new Categoria(1, "Shooter",   100.00));
