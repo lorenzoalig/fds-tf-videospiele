@@ -1,16 +1,43 @@
 package br.pucrs.fds.equipe6.trab1;
-
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+@Entity
 public class Uso {
+
+    @Id
     private int numero;
+
+    @Temporal(TemporalType.DATE)
     private Date dataInicio;
+
+    @Temporal(TemporalType.DATE)
     private Date dataFim;
+
     private int horarioInicio;
     private int horarioFim;
 
+    @ManyToOne
+    @JoinColumn(name = "contrato_id")
+    @JsonIgnore
+    private Contrato contrato;
 
+    public Uso(){
+
+    }
     public Uso(int numero, Date dataInicio, Date dataFim, int horarioInicio, int horarioFim) {
         this.numero = numero;
         this.dataInicio = dataInicio;

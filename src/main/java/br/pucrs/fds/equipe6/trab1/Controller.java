@@ -1,10 +1,12 @@
 package br.pucrs.fds.equipe6.trab1;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +41,7 @@ public class Controller {
         categorias.addCategoria(new Categoria(4, "Simulador", 300.99));
         categorias.addCategoria(new Categoria(5, "Aventura",  150.00));
 
-        
+
         Moeda real  = new Moeda(1, "Real Brasileiro", "R$",  1.00);
         Moeda dolar = new Moeda(2, "Dólar Americano", "USD", 5.80);
         Moeda euro  = new Moeda(3, "Euro",            "EUR", 6.30);
@@ -58,54 +60,66 @@ public class Controller {
         jogos.addJogo(new Jogo(11, "The Sims",            2025, 349.90, categorias.getCategoriaPorNome("Simulador"), real));
 
         formasPagamento = new FormasPagamento();
-        formasPagamento.addFormaPagamento(new FormaPagamento(11111, 11));
-        formasPagamento.addFormaPagamento(new FormaPagamento(22222, 22));
+        formasPagamento.addFormaPagamento(new PIX(111,10,"111.111.111-11"));
+        formasPagamento.addFormaPagamento(new PIX(222,20,"222.222.222-22"));
+        formasPagamento.addFormaPagamento(new PIX(333,30,"333.333.333-33"));
+        formasPagamento.addFormaPagamento(new PIX(444,40,"444.444.444-44"));
+
 
         contratos = new Contratos();
-
         // Contrato ativo — God of War
-        contratos.addContrato(new Contrato(
-            1,
-            new Date(125, 10, 10), // nov 2025
-            3600,
-            clientes.getClientes().get(0),
-            jogos.getJogos().get(2),
-            new Uso(1, new Date(126, 3, 1), new Date(126, 3, 1), 14, 18)
-        ));
+Contrato c1 = new Contrato(
+    1,
+    new Date(125, 10, 10),
+    3600,
+    clientes.getClientes().get(0),
+    jogos.getJogos().get(2),
+    formasPagamento.buscaPorNum(111)
+);
+c1.addUso(new Uso(1, new Date(126, 3, 1), new Date(126, 3, 1), 14, 18));
+contratos.addContrato(c1);
 
-        // Contrato ativo — Elden Ring
-        contratos.addContrato(new Contrato(
-            2,
-            new Date(126, 1, 15), // fev 2026
-            2400,
-            clientes.getClientes().get(1),
-            jogos.getJogos().get(4),
-            new Uso(2, new Date(126, 1, 15), new Date(126, 1, 20), 9, 12)
-        ));
+// Contrato ativo — Elden Ring
+Contrato c2 = new Contrato(
+    2,
+    new Date(126, 1, 15),
+    2400,
+    clientes.getClientes().get(1),
+    jogos.getJogos().get(4),
+    formasPagamento.buscaPorNum(222)
+);
+c2.addUso(new Uso(2, new Date(126, 1, 15), new Date(126, 1, 20), 9, 12));
+contratos.addContrato(c2);
 
-        // Contrato obsoleto — Red Dead
-        contratos.addContrato(new Contrato(
-            3,
-            new Date(121, 2, 10), // mar 2021
-            1200,
-            clientes.getClientes().get(2),
-            jogos.getJogos().get(1),
-            new Uso(3, new Date(121, 2, 10), new Date(121, 2, 15), 19, 22)
-        ));
+// Contrato obsoleto — Red Dead Redemption
+Contrato c3 = new Contrato(
+    3,
+    new Date(121, 2, 10),
+    1200,
+    clientes.getClientes().get(2),
+    jogos.getJogos().get(1),
+    formasPagamento.buscaPorNum(333)
+);
+c3.addUso(new Uso(3, new Date(121, 2, 10), new Date(121, 2, 15), 19, 22));
+contratos.addContrato(c3);
 
-        // Contrato removido — The Last of Us
-        contratos.addContrato(new Contrato(
-            4,
-            new Date(118, 5, 5), // jun 2018
-            600,
-            clientes.getClientes().get(3),
-            jogos.getJogos().get(0),
-            new Uso(4, new Date(118, 5, 5), new Date(118, 5, 8), 10, 11)
-        ));
+// Contrato removido — The Last of Us
+Contrato c4 = new Contrato(
+    4,
+    new Date(118, 5, 5),
+    600,
+    clientes.getClientes().get(3),
+    jogos.getJogos().get(0),
+    formasPagamento.buscaPorNum(444)
+);
+c4.addUso(new Uso(4, new Date(118, 5, 5), new Date(118, 5, 8), 10, 11));
+contratos.addContrato(c4);
 
-        // corrigido problema 1 — atualiza a situação dos jogos já na inicialização
+
+    // corrigido problema 1 — atualiza a situação dos jogos já na inicialização
         jogos.atualizarSituacaoJogos(contratos);
     }
+
 
     // endpoint 1: Consultar todos os clientes
     @GetMapping("/consulta/listaclientes")
@@ -126,16 +140,7 @@ public class Controller {
         return formasPagamento.getFormasPagamento();
     }
 
-    // endpoint 4: Consultar todos os contratos, clientes, jogos e usos 
-    @GetMapping("/consulta/listacontratos")
-    public List<ContratoRespostaDTO> consultarContratos() {
-        return contratos.getContratos()
-                .stream()
-                .map(ContratoRespostaDTO::new)
-                .toList();
-    }
-
-    // endpoint 5: Consultar jogos por situação 
+    // endpoint 5: Consultar jogos por situação
     @GetMapping("/consulta/jogossituacao/{situacao}")
     public List<Jogo> consultaJogoPorSituacao(@PathVariable String situacao) {
         jogos.atualizarSituacaoJogos(contratos);
@@ -172,7 +177,7 @@ public class Controller {
     }
 
     // endpoint 8: Calcular valor total de um contrato
-    // agora: rota nova /financeiro/... 
+    // agora: rota nova /financeiro/...
     @GetMapping("/financeiro/consultatotalcontrato")
     public double calculaValorContrato(@RequestParam int id) {
         double valorTotal = 0;
@@ -245,3 +250,4 @@ public class Controller {
         return true;
     }
 }
+

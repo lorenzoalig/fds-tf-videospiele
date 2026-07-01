@@ -4,28 +4,39 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.*;
 
-
+@Entity
 public class Contrato {
+
+    @Id
     private int id;
+
+    @Temporal(TemporalType.DATE)
     private Date data;
+
     private int periodo;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_cod")
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "jogo_cod")
     private Jogo jogo;
-    private List<Uso> usos;
+
+    @ManyToOne
+    @JoinColumn(name = "forma_pagamento_num")
+    private FormaPagamento formaPagamento;
+
+    @OneToMany(mappedBy = "contrato", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Uso> usos = new ArrayList<>();
+
+
     private boolean cancelado = false; // novo atributo ! para cancelar contratos (endpoint 10)
-    private FormaPagamento formaPagamento; // novo: TF exige forma de pagamento no contrato
 
+    public Contrato(){
 
-    public Contrato(int id, Date data, int periodo, Cliente cliente, Jogo jogo, Uso uso) {
-        this.id = id;
-        this.data = data;
-        this.periodo = periodo;
-        this.cliente = cliente;
-        this.jogo = jogo;
-
-        usos = new ArrayList<Uso>();
-        usos.add(uso);
     }
 
     //construtor pro metodo da classe contratos
