@@ -1,5 +1,6 @@
 package br.pucrs.fds.equipe6.trab1;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,13 @@ public class Clientela {
                     .filter(c -> c.getCPF().equals(cpf))
                     .findFirst()
                     .orElse(null);
+    }
+
+    public Cliente buscarClientePorCod(long cod) {
+        return clientes.stream()
+                .filter(c -> c.getCod() == cod)
+                .findFirst()
+                .orElse(null);
     }
 
 }
