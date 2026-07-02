@@ -66,8 +66,9 @@ public class Contrato {
         return this.cliente;
     }
 
-    public void addUso(Uso uso){
-        usos.add(uso);
+    public void addUso(Uso uso) {
+    uso.setContrato(this); 
+    usos.add(uso);
     }
 
     public int getId() {
