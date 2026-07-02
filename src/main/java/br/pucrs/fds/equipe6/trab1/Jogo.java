@@ -42,90 +42,60 @@ public class Jogo {
 
     public void setSituacao(Situacao situacao) { this.situacao = situacao; }
     public Situacao getSituacao() { return this.situacao; }
-
     public Moeda getMoeda() { return moeda; }
     public void setMoeda(Moeda moeda) { this.moeda = moeda; }
-
     public boolean isSituacaoManual() { return situacaoManual; }
     public void setSituacaoManual(boolean situacaoManual) { this.situacaoManual = situacaoManual; }
-
     public int getCod() { return this.cod; }
     public void setCod(int cod) { this.cod = cod; }
-
     public String getNome() { return this.nome; }
     public void setNome(String nome) { this.nome = nome; }
-
     public int getAno() { return this.ano; }
     public void setAno(int ano) { this.ano = ano; }
-
     public double getValorMinuto() { return this.valorMinuto; }
     public void setValorMinuto(double valorMinuto) { this.valorMinuto = valorMinuto; }
-
     public Categoria getCategoria() { return categoria; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    //modifiqei
-    public boolean estaContratado(Contratos contratos){
-        List<Contrato> contratosDoJogo = contratos.getContratos()
-                                                    .stream()
-                                                    .filter(c -> c.getJogo().equals(this) && !c.isCancelado())
-                                                    .toList();
-        //verifica se algum contrato ainda está ativo (não expirou)
+    //  recebe List<Contrato> diretamente
+    // usado pelo AtualizarSituacaoJogosService (JPA)
+    public boolean estaContratado(List<Contrato> contratosDoJogo) {
         Date hoje = new Date();
-        return contratosDoJogo.stream().anyMatch(c -> c.getDataFim().after(hoje));
+        return contratosDoJogo.stream()
+                .anyMatch(c -> !c.isCancelado() && c.getDataFim().after(hoje));
     }
 
-    public boolean estaObsoleto(Contratos contratos){
+    //  recebe List<Contrato> diretamente
+    public boolean estaObsoleto(List<Contrato> contratosDoJogo) {
+        Calendar limite2anos = Calendar.getInstance();
+        limite2anos.add(Calendar.YEAR, -2);
+        Date dataLimite = limite2anos.getTime();
 
-        Calendar limite = Calendar.getInstance();
-        limite.add(Calendar.YEAR, -2);
-        Date dataLimite = limite.getTime();
-
-        List<Contrato> contratosDoJogo = contratos.getContratos()
-                                                    .stream()
-                                                    .filter(c -> c.getJogo().equals(this))
-                                                    .toList();
-
-    // Caso 1:nunca teve contrato e foi lançado há mais de 3 anos - ajustado p/ t2
-    if(contratosDoJogo.isEmpty()) {
-
-        Calendar lancamento = Calendar.getInstance();
-
-        lancamento.set(this.getAno(), Calendar.JANUARY,1,0,0,0);
-        lancamento.set(Calendar.MILLISECOND, 0);
-
-        Calendar limite3anos = Calendar.getInstance();
-        limite3anos.add(Calendar.YEAR, -3);
-
-        if (lancamento.getTime().before(limite3anos.getTime())){
-            return true;
+        // Caso 1: nunca teve contrato e foi cadastrado há mais de 3 anos
+        if (contratosDoJogo.isEmpty()) {
+            Calendar limite3anos = Calendar.getInstance();
+            limite3anos.add(Calendar.YEAR, -3);
+            Calendar cadastro = Calendar.getInstance();
+            cadastro.set(this.getAno(), Calendar.JANUARY, 1, 0, 0, 0);
+            cadastro.set(Calendar.MILLISECOND, 0);
+            return cadastro.getTime().before(limite3anos.getTime());
         }
-    } else{
-    // Caso 2:último contrato expirou há mais de 2 anos
-            Date ultimaDataFim = contratosDoJogo.stream()
-                                                .flatMap(c -> c.getUsos().stream())
-                                                .map(Uso::getDataFim)
-                                                .filter(Objects::nonNull)
-                                                .max(Date::compareTo)
-                                                .orElse(null);
 
-            if(ultimaDataFim != null && ultimaDataFim.before(dataLimite)){
-                return true;
-            } else return false;
-         }
-        return false;
+        // Caso 2: último uso expirou há mais de 2 anos
+        Date ultimaDataFim = contratosDoJogo.stream()
+                .flatMap(c -> c.getUsos().stream())
+                .map(Uso::getDataFim)
+                .filter(Objects::nonNull)
+                .max(Date::compareTo)
+                .orElse(null);
+
+        return ultimaDataFim != null && ultimaDataFim.before(dataLimite);
     }
 
-    public boolean estaRemovido(Contratos contratos){
+    //  recebe List<Contrato> diretamente
+    public boolean estaRemovido(List<Contrato> contratosDoJogo) {
+        if (!estaObsoleto(contratosDoJogo)) return false;
 
-        if (!estaObsoleto(contratos)) return false;
-
-        List<Contrato> contratosDoJogo = contratos.getContratos()
-                                                    .stream()
-                                                    .filter(c -> c.getJogo().equals(this))
-                                                    .toList();
-
-        // sem contratos: removido após 4 anos do cadastro (3 anos obsoleto + 1 ano removido)
         if (contratosDoJogo.isEmpty()) {
             Calendar limite4anos = Calendar.getInstance();
             limite4anos.add(Calendar.YEAR, -4);
@@ -135,16 +105,16 @@ public class Jogo {
             return cadastro.getTime().before(limite4anos.getTime());
         }
 
-        Calendar limite = Calendar.getInstance();
-        limite.add(Calendar.YEAR, -3);
-        Date dataLimite = limite.getTime();
+        Calendar limite3anos = Calendar.getInstance();
+        limite3anos.add(Calendar.YEAR, -3);
+        Date dataLimite = limite3anos.getTime();
 
         Date ultimaDataFim = contratosDoJogo.stream()
-                                                .flatMap(c -> c.getUsos().stream())
-                                                .map(Uso::getDataFim)
-                                                .filter(Objects::nonNull)
-                                                .max(Date::compareTo)
-                                                .orElse(null);
+                .flatMap(c -> c.getUsos().stream())
+                .map(Uso::getDataFim)
+                .filter(Objects::nonNull)
+                .max(Date::compareTo)
+                .orElse(null);
 
         return ultimaDataFim != null && ultimaDataFim.before(dataLimite);
     }
