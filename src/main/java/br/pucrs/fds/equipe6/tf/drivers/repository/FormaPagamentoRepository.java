@@ -1,7 +1,6 @@
+package br.pucrs.fds.equipe6.tf.drivers.repository;
 
-package br.pucrs.fds.equipe6.trab1.repository;
-
-import br.pucrs.fds.equipe6.trab1.FormaPagamento;
+import br.pucrs.fds.equipe6.tf.domain.entity.FormaPagamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FormaPagamentoRepository extends JpaRepository<FormaPagamento, Integer> {

@@ -1,6 +1,6 @@
-package br.pucrs.fds.equipe6.trab1.repository;
+package br.pucrs.fds.equipe6.tf.drivers.repository;
 
-import br.pucrs.fds.equipe6.trab1.Cliente;
+import br.pucrs.fds.equipe6.tf.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

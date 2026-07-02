@@ -1,4 +1,4 @@
-package br.pucrs.fds.equipe6.tf.application.usecase;
+package br.pucrs.fds.equipe6.tf.application.dto;
 
 import java.util.Date;
 

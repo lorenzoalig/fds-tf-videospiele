@@ -3,25 +3,18 @@ package br.pucrs.fds.equipe6.tf.adapters;
 import java.util.Date;
 import java.util.List;
 
-import br.pucrs.fds.equipe6.tf.domain.entity.FormaPagamento;
-
-import br.pucrs.fds.equipe6.tf.domain.entity.Uso;
-import br.pucrs.fds.equipe6.tf.application.usecase.ContratoRespostaDTO;
-import br.pucrs.fds.equipe6.tf.application.usecase.CriaContratoDTO;
-import br.pucrs.fds.equipe6.tf.application.usecase.UsoDTO;
-import br.pucrs.fds.equipe6.tf.domain.Cliente;
-import br.pucrs.fds.equipe6.tf.domain.Contrato;
+import br.pucrs.fds.equipe6.tf.application.dto.ContratoRespostaDTO;
+import br.pucrs.fds.equipe6.tf.application.dto.CriaContratoDTO;
+import br.pucrs.fds.equipe6.tf.application.dto.UsoDTO;
+import br.pucrs.fds.equipe6.tf.application.usecase.*;
+import br.pucrs.fds.equipe6.tf.domain.entity.*;
+import br.pucrs.fds.equipe6.tf.domain.service.*;
+import br.pucrs.fds.equipe6.tf.drivers.repository.*;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * PADRÃO: MVC Controller: recebe requisições HTTP e delega para UseCases.
- * PADRÃO: Layers: camada de apresentação.
- * PADRÃO: Clean Architecture: Controller depende de UseCases, nunca acessa
- *   repositórios diretamente exceto quando não há UseCase dedicado.
- */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/acmespiele")

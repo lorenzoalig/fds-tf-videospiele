@@ -1,7 +1,8 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.domain.service;
 
-import br.pucrs.fds.equipe6.tf.Uso;
-import br.pucrs.fds.equipe6.tf.Contrato;
+
+import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
+import br.pucrs.fds.equipe6.tf.domain.entity.Uso;
 import br.pucrs.fds.equipe6.tf.drivers.repository.UsoRepository;
 import br.pucrs.fds.equipe6.tf.drivers.repository.ContratoRepository;
 
@@ -70,7 +71,6 @@ public class UploadUsosService {
                         horarioFim
                 );
 
-                // 🔥 MUITO IMPORTANTE: vínculo bidirecional
                 uso.setContrato(contrato);
                 contrato.addUso(uso);
 

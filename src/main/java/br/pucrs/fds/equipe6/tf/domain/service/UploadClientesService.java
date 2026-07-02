@@ -1,5 +1,6 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.domain.service;
 
+import br.pucrs.fds.equipe6.tf.domain.entity.Cliente;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-import br.pucrs.fds.equipe6.tf.Cliente;
+
 import br.pucrs.fds.equipe6.tf.drivers.repository.ClienteRepository;
 
 @Service

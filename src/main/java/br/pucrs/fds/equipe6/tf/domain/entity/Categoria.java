@@ -1,9 +1,8 @@
-package br.pucrs.fds.equipe6.tf.domain;
+package br.pucrs.fds.equipe6.tf.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.pucrs.fds.equipe6.tf.Jogo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;

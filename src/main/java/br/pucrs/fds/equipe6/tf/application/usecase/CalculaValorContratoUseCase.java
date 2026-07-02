@@ -1,7 +1,7 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.application.usecase;
 
-import br.pucrs.fds.equipe6.tf.Contrato;
-import br.pucrs.fds.equipe6.tf.Uso;
+import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
+import br.pucrs.fds.equipe6.tf.domain.entity.Uso;
 import br.pucrs.fds.equipe6.tf.drivers.repository.ContratoRepository;
 import org.springframework.stereotype.Service;
 

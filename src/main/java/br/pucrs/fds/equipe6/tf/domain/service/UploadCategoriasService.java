@@ -1,13 +1,14 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.domain.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import br.pucrs.fds.equipe6.tf.domain.entity.Categoria;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.pucrs.fds.equipe6.tf.Categoria;
+
 import br.pucrs.fds.equipe6.tf.drivers.repository.CategoriaRepository;
 
 @Service
@@ -41,7 +42,6 @@ public class UploadCategoriasService {
                 String nome = data[1];
                 double valorMinimo = Double.parseDouble(data[2]);
 
-                // 🚨 regra do trabalho: evitar duplicados
                 if (categoriaRepository.existsById(num)) {
                     continue;
                 }

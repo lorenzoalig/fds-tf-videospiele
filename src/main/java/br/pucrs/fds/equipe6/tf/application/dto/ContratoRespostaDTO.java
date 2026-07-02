@@ -1,7 +1,6 @@
-package br.pucrs.fds.equipe6.tf.application.usecase;
+package br.pucrs.fds.equipe6.tf.application.dto;
 
-import br.pucrs.fds.equipe6.tf.domain.Contrato;
-
+import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

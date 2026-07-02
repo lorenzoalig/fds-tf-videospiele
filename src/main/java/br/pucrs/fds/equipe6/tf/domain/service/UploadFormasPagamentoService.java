@@ -1,14 +1,13 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.domain.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 
+import br.pucrs.fds.equipe6.tf.domain.entity.PIX;
+import br.pucrs.fds.equipe6.tf.domain.entity.FormaPagamento;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import br.pucrs.fds.equipe6.tf.FormaPagamento;
-import br.pucrs.fds.equipe6.tf.PIX;
 import br.pucrs.fds.equipe6.tf.drivers.repository.FormaPagamentoRepository;
 
 @Service
@@ -49,7 +48,7 @@ public class UploadFormasPagamentoService {
 
                 FormaPagamento forma = null;
 
-                // 📌 TIPO 1 = PIX (no seu sistema atual)
+                // PIX
                 if (tipo == 1) {
 
                     String chavePix = data[3];
@@ -57,7 +56,7 @@ public class UploadFormasPagamentoService {
                     forma = new PIX(num, diaVencimento, chavePix);
                 }
 
-                // 📌 extensão futura (cartão, boleto etc)
+                // cartão
                 else {
                     continue; // ignora tipos desconhecidos
                 }

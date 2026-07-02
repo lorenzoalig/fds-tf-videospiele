@@ -1,13 +1,8 @@
-package br.pucrs.fds.equipe6.tf.domain;
+package br.pucrs.fds.equipe6.tf.domain.entity;
 
-import br.pucrs.fds.equipe6.tf.FormaPagamento;
-import br.pucrs.fds.equipe6.tf.FormasPagamento;
-import br.pucrs.fds.equipe6.tf.Jogo;
-import br.pucrs.fds.equipe6.tf.Jogos;
-import br.pucrs.fds.equipe6.tf.application.usecase.CriaContratoDTO;
-import br.pucrs.fds.equipe6.tf.domain.Cliente;
-import br.pucrs.fds.equipe6.tf.domain.Clientela;
-import br.pucrs.fds.equipe6.tf.domain.Contrato;
+
+import br.pucrs.fds.equipe6.tf.application.dto.CriaContratoDTO;
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,11 @@
-package br.pucrs.fds.equipe6.tf.domain;
+package br.pucrs.fds.equipe6.tf.domain.entity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import br.pucrs.fds.equipe6.tf.FormaPagamento;
-import br.pucrs.fds.equipe6.tf.Jogo;
-import br.pucrs.fds.equipe6.tf.Uso;
+
 import jakarta.persistence.*;
 
 @Entity

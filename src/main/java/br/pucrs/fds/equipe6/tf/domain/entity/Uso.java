@@ -6,7 +6,6 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import br.pucrs.fds.equipe6.tf.domain.Contrato;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;

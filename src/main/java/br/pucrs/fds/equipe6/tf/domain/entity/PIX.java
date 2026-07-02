@@ -1,7 +1,6 @@
 package br.pucrs.fds.equipe6.tf.domain.entity;
 import jakarta.persistence.Entity;
 
-
 @Entity
 public class PIX extends FormaPagamento {
 

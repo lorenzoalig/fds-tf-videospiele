@@ -1,7 +1,8 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.application.usecase;
 
-import br.pucrs.fds.equipe6.tf.Jogo;
-import br.pucrs.fds.equipe6.tf.Situacao;
+
+import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
+import br.pucrs.fds.equipe6.tf.domain.entity.Situacao;
 import br.pucrs.fds.equipe6.tf.drivers.repository.JogoRepository;
 import org.springframework.stereotype.Service;
 

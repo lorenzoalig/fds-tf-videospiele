@@ -1,7 +1,7 @@
-package br.pucrs.fds.equipe6.trab1.repository;
+package br.pucrs.fds.equipe6.tf.drivers.repository;
 
-import br.pucrs.fds.equipe6.trab1.Contrato;
-import br.pucrs.fds.equipe6.trab1.Jogo;
+import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
+import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

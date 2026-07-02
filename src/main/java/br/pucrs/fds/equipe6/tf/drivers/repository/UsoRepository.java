@@ -1,10 +1,8 @@
-package br.pucrs.fds.equipe6.trab1.repository;
+package br.pucrs.fds.equipe6.tf.drivers.repository;
 
 import java.util.List;
-
+import br.pucrs.fds.equipe6.tf.domain.entity.Uso;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import br.pucrs.fds.equipe6.trab1.Uso;
 
 public interface UsoRepository extends JpaRepository<Uso, Integer> {
 

@@ -1,7 +1,6 @@
 package br.pucrs.fds.equipe6.tf.domain.entity;
 import java.util.Date;
 
-import br.pucrs.fds.equipe6.tf.FormaPagamento;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;

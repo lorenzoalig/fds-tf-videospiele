@@ -1,4 +1,4 @@
-package br.pucrs.fds.equipe6.tf.adapters;
+package br.pucrs.fds.equipe6.tf;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.FormaPagamento;
 import br.pucrs.fds.equipe6.tf.domain.entity.Moeda;

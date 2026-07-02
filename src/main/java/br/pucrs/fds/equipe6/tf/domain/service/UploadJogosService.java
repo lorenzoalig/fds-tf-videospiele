@@ -1,15 +1,16 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.domain.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import br.pucrs.fds.equipe6.tf.domain.entity.Categoria;
+import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
+import br.pucrs.fds.equipe6.tf.domain.entity.Moeda;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.pucrs.fds.equipe6.tf.Categoria;
-import br.pucrs.fds.equipe6.tf.Jogo;
-import br.pucrs.fds.equipe6.tf.Moeda;
+
 import br.pucrs.fds.equipe6.tf.drivers.repository.CategoriaRepository;
 import br.pucrs.fds.equipe6.tf.drivers.repository.JogoRepository;
 import br.pucrs.fds.equipe6.tf.drivers.repository.MoedaRepository;
@@ -54,7 +55,6 @@ public class UploadJogosService {
                 String nomeCategoria = data[4];
                 int codMoeda = Integer.parseInt(data[5]);
 
-                // 🚨 REGRA: evitar duplicados
                 if (jogoRepository.existsById(cod)) {
                     continue;
                 }

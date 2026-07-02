@@ -1,4 +1,4 @@
-package br.pucrs.fds.equipe6.tf.domain;
+package br.pucrs.fds.equipe6.tf.domain.entity;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Situacao;
 

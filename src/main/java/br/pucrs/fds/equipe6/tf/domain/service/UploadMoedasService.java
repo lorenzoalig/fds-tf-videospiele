@@ -1,10 +1,12 @@
-package br.pucrs.fds.equipe6.tf.usecase;
+package br.pucrs.fds.equipe6.tf.domain.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
+import br.pucrs.fds.equipe6.tf.domain.entity.Moeda;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import br.pucrs.fds.equipe6.tf.Moeda;
+
 import br.pucrs.fds.equipe6.tf.drivers.repository.MoedaRepository;
 
 @Service
