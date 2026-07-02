@@ -86,6 +86,13 @@ public class Uso {
         this.horarioFim = horarioFim;
     }
 
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
     public long getDuracaoMinutos() {
         LocalDate dataIni = dataInicio.toInstant()
                 .atZone(ZoneId.systemDefault())
