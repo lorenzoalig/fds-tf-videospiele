@@ -5,18 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Categoria;
+import br.pucrs.fds.equipe6.tf.domain.repository.ICategoriaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import br.pucrs.fds.equipe6.tf.domain.repository.CategoriaRepository;
 
 @Service
 public class UploadCategoriasUseCase {
 
-    private final CategoriaRepository categoriaRepository;
+    private final ICategoriaRepository categoriaRepository;
 
-    public UploadCategoriasUseCase(CategoriaRepository categoriaRepository) {
+    public UploadCategoriasUseCase(ICategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
     }
 

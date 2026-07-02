@@ -8,27 +8,26 @@ import br.pucrs.fds.equipe6.tf.domain.entity.Cliente;
 import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
 import br.pucrs.fds.equipe6.tf.domain.entity.FormaPagamento;
 import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
+import br.pucrs.fds.equipe6.tf.domain.repository.IClienteRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IContratoRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IFormaPagamentoRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IJogoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import br.pucrs.fds.equipe6.tf.domain.repository.ClienteRepository;
-import br.pucrs.fds.equipe6.tf.domain.repository.ContratoRepository;
-import br.pucrs.fds.equipe6.tf.domain.repository.FormaPagamentoRepository;
-import br.pucrs.fds.equipe6.tf.domain.repository.JogoRepository;
-
 @Service
 public class UploadContratosUseCase {
 
-    private final ContratoRepository contratoRepository;
-    private final ClienteRepository clienteRepository;
-    private final JogoRepository jogoRepository;
-    private final FormaPagamentoRepository formaPagamentoRepository;
+    private final IContratoRepository contratoRepository;
+    private final IClienteRepository clienteRepository;
+    private final IJogoRepository jogoRepository;
+    private final IFormaPagamentoRepository formaPagamentoRepository;
 
-    public UploadContratosUseCase(ContratoRepository contratoRepository,
-                                  ClienteRepository clienteRepository,
-                                  JogoRepository jogoRepository,
-                                  FormaPagamentoRepository formaPagamentoRepository) {
+    public UploadContratosUseCase(IContratoRepository contratoRepository,
+                                  IClienteRepository clienteRepository,
+                                  IJogoRepository jogoRepository,
+                                  IFormaPagamentoRepository formaPagamentoRepository) {
         this.contratoRepository = contratoRepository;
         this.clienteRepository = clienteRepository;
         this.jogoRepository = jogoRepository;
@@ -66,14 +65,11 @@ public class UploadContratosUseCase {
                     continue;
                 }
 
-                Cliente cliente = clienteRepository.findById((long) codCliente)
-                        .orElse(null);
+                Cliente cliente = clienteRepository.findById((long) codCliente);
 
-                Jogo jogo = jogoRepository.findById(codJogo)
-                        .orElse(null);
+                Jogo jogo = jogoRepository.findById(codJogo);
 
-                FormaPagamento formaPagamento = formaPagamentoRepository.findById(numFormaPagamento)
-                        .orElse(null);
+                FormaPagamento formaPagamento = formaPagamentoRepository.findById(numFormaPagamento);
 
                 if (cliente == null || jogo == null || formaPagamento == null) {
                     continue; // ou return false se quiser mais rígido

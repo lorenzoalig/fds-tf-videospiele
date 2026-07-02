@@ -40,4 +40,9 @@ public class FormaPagamentoJpaImplRepository implements IFormaPagamentoRepositor
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public boolean existsById(int num) {
+        return repository.existsById(num);
+    }
 }

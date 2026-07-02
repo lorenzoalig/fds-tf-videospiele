@@ -1,6 +1,8 @@
 package br.pucrs.fds.equipe6.tf.application.usecase;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Cliente;
+import br.pucrs.fds.equipe6.tf.domain.repository.IClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,15 +10,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-
-import br.pucrs.fds.equipe6.tf.domain.repository.ClienteRepository;
-
 @Service
 public class UploadClientesUseCase {
 
-    private final ClienteRepository clienteRepository;
+    private final IClienteRepository clienteRepository;
 
-    public UploadClientesUseCase(ClienteRepository clienteRepository) {
+    @Autowired
+    public UploadClientesUseCase(IClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 

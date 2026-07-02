@@ -9,4 +9,5 @@ public interface IUsoRepository {
     List<Uso> findAll();
     List<Uso> findByContratoId(int contratoId);
     void deleteById(Integer id);
+    boolean existsById(int numero);
 }

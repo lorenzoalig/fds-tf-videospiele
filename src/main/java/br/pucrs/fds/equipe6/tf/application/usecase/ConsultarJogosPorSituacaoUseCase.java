@@ -3,7 +3,7 @@ package br.pucrs.fds.equipe6.tf.application.usecase;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
 import br.pucrs.fds.equipe6.tf.domain.entity.Situacao;
-import br.pucrs.fds.equipe6.tf.domain.repository.JogoRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IJogoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class ConsultarJogosPorSituacaoUseCase {
 
-    private final JogoRepository jogoRepository;
+    private final IJogoRepository jogoRepository;
     private final AtualizaSituacaoJogosUseCase atualizaSituacaoJogosUseCase;
 
-    public ConsultarJogosPorSituacaoUseCase(JogoRepository jogoRepository,
+    public ConsultarJogosPorSituacaoUseCase(IJogoRepository jogoRepository,
                                              AtualizaSituacaoJogosUseCase atualizaSituacaoJogosUseCase) {
         this.jogoRepository = jogoRepository;
         this.atualizaSituacaoJogosUseCase = atualizaSituacaoJogosUseCase;

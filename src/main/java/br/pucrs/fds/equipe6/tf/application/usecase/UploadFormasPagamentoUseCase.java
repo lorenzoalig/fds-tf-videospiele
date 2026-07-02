@@ -6,16 +6,17 @@ import java.text.SimpleDateFormat;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.PIX;
 import br.pucrs.fds.equipe6.tf.domain.entity.FormaPagamento;
+import br.pucrs.fds.equipe6.tf.domain.repository.IFormaPagamentoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import br.pucrs.fds.equipe6.tf.domain.repository.FormaPagamentoRepository;
+
 
 @Service
 public class UploadFormasPagamentoUseCase {
 
-    private final FormaPagamentoRepository formaPagamentoRepository;
+    private final IFormaPagamentoRepository formaPagamentoRepository;
 
-    public UploadFormasPagamentoUseCase(FormaPagamentoRepository formaPagamentoRepository) {
+    public UploadFormasPagamentoUseCase(IFormaPagamentoRepository formaPagamentoRepository) {
         this.formaPagamentoRepository = formaPagamentoRepository;
     }
 

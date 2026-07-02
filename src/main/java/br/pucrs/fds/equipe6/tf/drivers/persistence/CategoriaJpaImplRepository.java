@@ -41,4 +41,9 @@ public class CategoriaJpaImplRepository implements ICategoriaRepository {
         repository.deleteById(id);
     }
 
+    @Override
+    public boolean existsById(int num) {
+        return repository.existsById(num);
+    }
+
 }

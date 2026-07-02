@@ -46,4 +46,9 @@ public class UsoJpaImplRepository implements IUsoRepository {
         repository.deleteById(id);
     }
 
+    @Override
+    public boolean existsById(int numero) {
+        return repository.existsById(numero);
+    }
+
 }

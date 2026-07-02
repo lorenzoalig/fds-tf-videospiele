@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -25,6 +26,13 @@ public class JogoJpaImplRepository implements IJogoRepository {
     }
 
     @Override
+    public List<Jogo> saveAll(List<Jogo> jogos) {
+        List<Jogo> jogosSalvos = new ArrayList<>();
+        repository.saveAll(jogos).forEach(jogosSalvos::add);
+        return jogosSalvos;
+    }
+
+    @Override
     public Jogo findById(Integer id) {
         return repository.findById(id).orElse(null);
     }
@@ -39,5 +47,10 @@ public class JogoJpaImplRepository implements IJogoRepository {
     @Override
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(int cod) {
+        return repository.existsById(cod);
     }
 }

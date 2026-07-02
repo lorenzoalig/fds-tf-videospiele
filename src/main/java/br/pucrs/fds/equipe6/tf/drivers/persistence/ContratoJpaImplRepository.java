@@ -52,4 +52,8 @@ public class ContratoJpaImplRepository implements IContratoRepository {
         repository.deleteById(id);
     }
 
+    @Override
+    public boolean existsById(int id) {
+        return repository.existsById(id);
+    }
 }

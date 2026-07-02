@@ -6,6 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface IUsoJpaItfRepo extends CrudRepository<Uso, Integer> {
-
     List<Uso> findByContrato_Id(int contratoId);
 }

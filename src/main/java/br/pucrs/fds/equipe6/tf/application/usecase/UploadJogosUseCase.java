@@ -7,24 +7,23 @@ import java.io.InputStreamReader;
 import br.pucrs.fds.equipe6.tf.domain.entity.Categoria;
 import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
 import br.pucrs.fds.equipe6.tf.domain.entity.Moeda;
+import br.pucrs.fds.equipe6.tf.domain.repository.ICategoriaRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IJogoRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IMoedaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import br.pucrs.fds.equipe6.tf.domain.repository.CategoriaRepository;
-import br.pucrs.fds.equipe6.tf.domain.repository.JogoRepository;
-import br.pucrs.fds.equipe6.tf.domain.repository.MoedaRepository;
-
 @Service
 public class UploadJogosUseCase {
 
-    private final JogoRepository jogoRepository;
-    private final CategoriaRepository categoriaRepository;
-    private final MoedaRepository moedaRepository;
+    private final IJogoRepository jogoRepository;
+    private final ICategoriaRepository categoriaRepository;
+    private final IMoedaRepository moedaRepository;
 
-    public UploadJogosUseCase(JogoRepository jogoRepository,
-                              CategoriaRepository categoriaRepository,
-                              MoedaRepository moedaRepository) {
+    public UploadJogosUseCase(IJogoRepository jogoRepository,
+                              ICategoriaRepository categoriaRepository,
+                              IMoedaRepository moedaRepository) {
         this.jogoRepository = jogoRepository;
         this.categoriaRepository = categoriaRepository;
         this.moedaRepository = moedaRepository;
@@ -66,9 +65,7 @@ public class UploadJogosUseCase {
                         .findFirst()
                         .orElse(null);
 
-                Moeda moeda = moedaRepository
-                        .findById(codMoeda)
-                        .orElse(null);
+                Moeda moeda = moedaRepository.findById(codMoeda);
 
                 if (categoria == null || moeda == null) {
                     continue; // ou pode dar false se quiser validar mais forte

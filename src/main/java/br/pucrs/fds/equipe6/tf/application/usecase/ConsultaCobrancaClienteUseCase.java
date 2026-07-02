@@ -3,7 +3,7 @@ package br.pucrs.fds.equipe6.tf.application.usecase;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
 import br.pucrs.fds.equipe6.tf.domain.entity.Uso;
-import br.pucrs.fds.equipe6.tf.domain.repository.ContratoRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IContratoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,15 +11,15 @@ import java.util.List;
 @Service
 public class ConsultaCobrancaClienteUseCase {
 
-    private final ContratoRepository contratoRepository;
+    private final IContratoRepository contratoRepository;
 
-    public ConsultaCobrancaClienteUseCase(ContratoRepository contratoRepository) {
+    public ConsultaCobrancaClienteUseCase(IContratoRepository contratoRepository) {
         this.contratoRepository = contratoRepository;
     }
 
     public double executar(String cpf) {
         double valorTotal = 0;
-        List<Contrato> contratosCliente = contratoRepository.findByCliente_CPF(cpf);
+        List<Contrato> contratosCliente = contratoRepository.findByClienteCPF(cpf);
 
         for (Contrato c : contratosCliente) {
             double valorBase = c.getJogo().getCategoria().getValorMinimo();

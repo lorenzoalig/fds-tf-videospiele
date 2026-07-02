@@ -8,5 +8,5 @@ public interface IMoedaRepository {
     Moeda findById(Integer id);
     List<Moeda> findAll();
     void deleteById(Integer id);
-    void delete(Moeda moeda);
+    boolean existsById(int cod);
 }

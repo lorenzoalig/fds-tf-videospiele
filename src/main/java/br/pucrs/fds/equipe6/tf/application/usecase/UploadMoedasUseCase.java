@@ -4,16 +4,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Moeda;
+import br.pucrs.fds.equipe6.tf.domain.repository.IMoedaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.pucrs.fds.equipe6.tf.domain.repository.MoedaRepository;
 
 @Service
 public class UploadMoedasUseCase {
-    private final MoedaRepository moedaRepository;
+    private final IMoedaRepository moedaRepository;
 
-    public UploadMoedasUseCase(MoedaRepository moedaRepository) {
+    public UploadMoedasUseCase(IMoedaRepository moedaRepository) {
         this.moedaRepository = moedaRepository;
     }
 

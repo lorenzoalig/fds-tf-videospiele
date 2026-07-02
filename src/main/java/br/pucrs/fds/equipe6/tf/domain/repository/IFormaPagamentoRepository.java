@@ -8,4 +8,5 @@ public interface IFormaPagamentoRepository {
     FormaPagamento findById(Integer id);
     List<FormaPagamento> findAll();
     void deleteById(Integer id);
+    boolean existsById(int num);
 }

@@ -157,8 +157,8 @@ public class Controller {
         if (contratoRepository.existsById(dto.getId())) return false;
 
         Cliente cliente = clienteRepository.findByCPF(dto.getCpf()).orElse(null);
-        Jogo jogo = jogoRepository.findById(dto.getCodigoJogo()).orElse(null);
-        FormaPagamento forma = formaPagamentoRepository.findById(dto.getNum()).orElse(null);
+        Jogo jogo = jogoRepository.findById(dto.getCodigoJogo());
+        FormaPagamento forma = formaPagamentoRepository.findById(dto.getNum());
 
         if (cliente == null || jogo == null || forma == null) return false;
 
@@ -177,7 +177,7 @@ public class Controller {
     // CORRIGIDO 
     @PostMapping("/cadastro/caduso")
     public boolean cadastrarUso(@RequestBody UsoDTO dto) {
-        Contrato contrato = contratoRepository.findById(dto.getIdContrato()).orElse(null);
+        Contrato contrato = contratoRepository.findById(dto.getIdContrato());
         if (contrato == null) return false;
 
         boolean duplicado = contrato.getUsos().stream()
@@ -219,7 +219,7 @@ public class Controller {
     // CORRIGIDO 
     @DeleteMapping("/cadastro/cancelacontrato")
     public boolean cancelarContrato(@RequestBody int id) {
-        Contrato contrato = contratoRepository.findById(id).orElse(null);
+        Contrato contrato = contratoRepository.findById(id);
         if (contrato == null) return false;
         contrato.cancelar();
         contratoRepository.save(contrato);

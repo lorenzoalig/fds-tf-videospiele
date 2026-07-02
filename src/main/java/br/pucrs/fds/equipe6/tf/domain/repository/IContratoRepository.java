@@ -11,4 +11,5 @@ public interface IContratoRepository {
     List<Contrato> findByJogo(Jogo jogo);
     List<Contrato> findByClienteCPF(String cpf);
     void deleteById(Integer id);
+    boolean existsById(int id);
 }

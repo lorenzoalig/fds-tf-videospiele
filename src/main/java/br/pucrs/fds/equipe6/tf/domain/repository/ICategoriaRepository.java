@@ -8,4 +8,5 @@ public interface ICategoriaRepository {
     Categoria findById(Integer id);
     List<Categoria> findAll();
     void deleteById(Integer id);
+    boolean existsById(int num);
 }

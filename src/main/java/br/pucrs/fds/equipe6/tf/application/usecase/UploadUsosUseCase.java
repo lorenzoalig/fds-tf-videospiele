@@ -3,9 +3,9 @@ package br.pucrs.fds.equipe6.tf.application.usecase;
 
 import br.pucrs.fds.equipe6.tf.domain.entity.Contrato;
 import br.pucrs.fds.equipe6.tf.domain.entity.Uso;
-import br.pucrs.fds.equipe6.tf.domain.repository.UsoRepository;
-import br.pucrs.fds.equipe6.tf.domain.repository.ContratoRepository;
-
+import br.pucrs.fds.equipe6.tf.domain.repository.IContratoRepository;
+import br.pucrs.fds.equipe6.tf.domain.repository.IUsoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,11 +16,12 @@ import java.text.SimpleDateFormat;
 @Service
 public class UploadUsosUseCase {
 
-    private final UsoRepository usoRepository;
-    private final ContratoRepository contratoRepository;
+    private final IUsoRepository usoRepository;
+    private final IContratoRepository contratoRepository;
 
-    public UploadUsosUseCase(UsoRepository usoRepository,
-                             ContratoRepository contratoRepository) {
+    @Autowired
+    public UploadUsosUseCase(IUsoRepository usoRepository,
+                             IContratoRepository contratoRepository) {
         this.usoRepository = usoRepository;
         this.contratoRepository = contratoRepository;
     }
@@ -56,8 +57,7 @@ public class UploadUsosUseCase {
                     continue;
                 }
 
-                Contrato contrato = contratoRepository.findById(contratoId)
-                        .orElse(null);
+                Contrato contrato = contratoRepository.findById(contratoId);
 
                 if (contrato == null) {
                     continue;
