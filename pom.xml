@@ -10,7 +10,7 @@
         <version>3.5.0</version>
         <relativePath/>
     </parent>
-    <groupId>br.pucrs.fds.equipe6</groupId>
+    <groupId>br.pucrs.fds.equipe6.tf</groupId>
     <artifactId>fds-tf-videospiele</artifactId>
     <version>0.1.0</version>
     <name>videospiele-app</name>
