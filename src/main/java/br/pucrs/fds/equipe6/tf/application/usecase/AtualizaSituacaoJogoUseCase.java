@@ -26,7 +26,7 @@ public class AtualizaSituacaoJogoUseCase {
         if (situacao == null) return Optional.empty();
 
         jogo.setSituacao(situacao);
-        jogo.setSituacaoManual(true);
+        jogo.setSituacaoManual(situacao == Situacao.BLOQUEADO);
 
         return Optional.of(jogoRepository.save(jogo));
     }

@@ -89,13 +89,24 @@ class JogosTest {
 
     @Test
     void deveMarcarObsoletoQuandoCadastradoHaMaisDe3AnosSemContrato() {
-        Jogo j = new Jogo(1, "Jogo A", anoAtual() - 5, 0.5, null, null);
+        Jogo j = new Jogo(1, "Jogo A", anoAtual() - 3, 0.5, null, null);
         jogos.addJogo(j);
 
         Contratos contratos = new Contratos();
         jogos.atualizarSituacaoJogos(contratos);
 
         assertThat(j.getSituacao()).isEqualTo(Situacao.OBSOLETO);
+    }
+
+    @Test
+    void deveMarcarRemovidoQuandoCadastradoHaMaisDe4AnosSemContrato() {
+        Jogo j = new Jogo(1, "Jogo A", anoAtual() - 5, 0.5, null, null);
+        jogos.addJogo(j);
+
+        Contratos contratos = new Contratos();
+        jogos.atualizarSituacaoJogos(contratos);
+
+        assertThat(j.getSituacao()).isEqualTo(Situacao.REMOVIDO);
     }
 
     @Test

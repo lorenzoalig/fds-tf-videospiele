@@ -23,7 +23,9 @@ class AtualizaSituacaoJogosUseCaseTest {
 
         @Override public Jogo save(Jogo jogo) { jogos.add(jogo); return jogo; }
         @Override public List<Jogo> saveAll(List<Jogo> lista) { return lista; }
-        @Override public Jogo findById(Integer id) { return null; }
+        @Override public Jogo findById(Integer id) {
+            return jogos.stream().filter(j -> j.getCod() == id).findFirst().orElse(null);
+        }
         @Override public List<Jogo> findAll() { return jogos; }
         @Override public void deleteById(Integer id) { }
         @Override public boolean existsById(int cod) { return false; }
@@ -98,7 +100,7 @@ class AtualizaSituacaoJogosUseCaseTest {
 
     @Test
     void deveMarcarObsoletoQuandoCadastradoHaMaisDe3AnosSemContrato() {
-        Jogo jogo = new Jogo(1, "Jogo A", anoAtual() - 5, 0.5, null, null);
+        Jogo jogo = new Jogo(1, "Jogo A", anoAtual() - 3, 0.5, null, null);
         jogoRepository.adicionar(jogo);
 
         useCase.executar();
@@ -114,5 +116,104 @@ class AtualizaSituacaoJogosUseCaseTest {
         useCase.executar();
 
         assertThat(jogo.getSituacao()).isEqualTo(Situacao.REMOVIDO);
+    }
+
+    @Test
+    void deveVoltarParaDisponivelQuandoContratoExpirouNaturalmente() {
+        Jogo jogo = new Jogo(1, "Jogo A", anoAtual(), 0.5, null, null);
+        jogoRepository.adicionar(jogo);
+
+        Cliente cliente = new Cliente(1L, "L", "111", "l@t.com", null, "s");
+        Calendar dataInicio = Calendar.getInstance();
+        dataInicio.add(Calendar.DAY_OF_MONTH, -60);
+        Contrato contratoExpirado = new Contrato(1, dataInicio.getTime(), 30, cliente, jogo);
+        contratoRepository.adicionar(contratoExpirado);
+
+        useCase.executar();
+
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.DISPONIVEL);
+    }
+
+    @Test
+    void deveVoltarParaDisponivelQuandoContratoAtivoFoiCancelado() {
+        Jogo jogo = new Jogo(1, "Jogo A", anoAtual(), 0.5, null, null);
+        jogoRepository.adicionar(jogo);
+
+        Cliente cliente = new Cliente(1L, "L", "111", "l@t.com", null, "s");
+        Contrato contratoCancelado = new Contrato(1, new Date(), 30, cliente, jogo);
+        contratoCancelado.cancelar();
+        contratoRepository.adicionar(contratoCancelado);
+
+        useCase.executar();
+
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.DISPONIVEL);
+    }
+
+    @Test
+    void deveMarcarObsoletoQuandoUltimoUsoHaMaisDe2Anos() {
+        Jogo jogo = new Jogo(1, "Jogo A", anoAtual(), 0.5, null, null);
+        jogoRepository.adicionar(jogo);
+
+        Cliente cliente = new Cliente(1L, "L", "111", "l@t.com", null, "s");
+        Calendar dataInicio = Calendar.getInstance();
+        dataInicio.add(Calendar.YEAR, -2);
+        dataInicio.add(Calendar.DAY_OF_MONTH, -40);
+        Contrato contrato = new Contrato(1, dataInicio.getTime(), 10, cliente, jogo);
+
+        Calendar dataUltimoUso = Calendar.getInstance();
+        dataUltimoUso.add(Calendar.YEAR, -2);
+        dataUltimoUso.add(Calendar.DAY_OF_MONTH, -30);
+        Uso uso = new Uso(1, dataUltimoUso.getTime(), dataUltimoUso.getTime(), 0, 1);
+        contrato.addUso(uso);
+        contratoRepository.adicionar(contrato);
+
+        useCase.executar();
+
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.OBSOLETO);
+    }
+
+    @Test
+    void deveMarcarRemovidoQuandoUltimoUsoHaMaisDe3Anos() {
+        Jogo jogo = new Jogo(1, "Jogo A", anoAtual(), 0.5, null, null);
+        jogoRepository.adicionar(jogo);
+
+        Cliente cliente = new Cliente(1L, "L", "111", "l@t.com", null, "s");
+        Calendar dataInicio = Calendar.getInstance();
+        dataInicio.add(Calendar.YEAR, -4);
+        Contrato contrato = new Contrato(1, dataInicio.getTime(), 30, cliente, jogo);
+
+        Calendar dataUltimoUso = Calendar.getInstance();
+        dataUltimoUso.add(Calendar.YEAR, -4);
+        Uso uso = new Uso(1, dataUltimoUso.getTime(), dataUltimoUso.getTime(), 0, 1);
+        contrato.addUso(uso);
+        contratoRepository.adicionar(contrato);
+
+        useCase.executar();
+
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.REMOVIDO);
+    }
+
+    @Test
+    void jogoDesbloqueadoDeveVoltarASerRecalculadoAutomaticamente() {
+        Jogo jogo = new Jogo(1, "Jogo A", anoAtual(), 0.5, null, null);
+        jogoRepository.adicionar(jogo);
+
+        Cliente cliente = new Cliente(1L, "L", "111", "l@t.com", null, "s");
+        Contrato contrato = new Contrato(1, new Date(), 30, cliente, jogo);
+        contratoRepository.adicionar(contrato);
+
+        AtualizaSituacaoJogoUseCase manualUseCase = new AtualizaSituacaoJogoUseCase(jogoRepository);
+        manualUseCase.executar(1, "bloqueado");
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.BLOQUEADO);
+        assertThat(jogo.isSituacaoManual()).isTrue();
+
+        useCase.executar();
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.BLOQUEADO);
+
+        manualUseCase.executar(1, "disponivel");
+        assertThat(jogo.isSituacaoManual()).isFalse();
+
+        useCase.executar();
+        assertThat(jogo.getSituacao()).isEqualTo(Situacao.CONTRATADO);
     }
 }

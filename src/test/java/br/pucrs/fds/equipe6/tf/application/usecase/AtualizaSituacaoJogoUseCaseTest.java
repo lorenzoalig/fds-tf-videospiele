@@ -67,4 +67,72 @@ class AtualizaSituacaoJogoUseCaseTest {
         assertThat(resultado.get().getSituacao()).isEqualTo(Situacao.BLOQUEADO);
         assertThat(resultado.get().isSituacaoManual()).isTrue();
     }
+
+    @Test
+    void deveBloquearJogoQueEstavaContratado() {
+        Jogo jogo = new Jogo(1, "Jogo A", 2024, 0.5, null, null);
+        jogo.setSituacao(Situacao.CONTRATADO);
+        jogoRepository.adicionar(jogo);
+
+        Optional<Jogo> resultado = useCase.executar(1, "bloqueado");
+
+        assertThat(resultado).isPresent();
+        assertThat(resultado.get().getSituacao()).isEqualTo(Situacao.BLOQUEADO);
+        assertThat(resultado.get().isSituacaoManual()).isTrue();
+    }
+
+    @Test
+    void deveBloquearJogoQueEstavaObsoleto() {
+        Jogo jogo = new Jogo(1, "Jogo A", 2024, 0.5, null, null);
+        jogo.setSituacao(Situacao.OBSOLETO);
+        jogoRepository.adicionar(jogo);
+
+        Optional<Jogo> resultado = useCase.executar(1, "bloqueado");
+
+        assertThat(resultado).isPresent();
+        assertThat(resultado.get().getSituacao()).isEqualTo(Situacao.BLOQUEADO);
+        assertThat(resultado.get().isSituacaoManual()).isTrue();
+    }
+
+    @Test
+    void deveDesbloquearJogoVoltandoParaDisponivel() {
+        Jogo jogo = new Jogo(1, "Jogo A", 2024, 0.5, null, null);
+        jogo.setSituacao(Situacao.BLOQUEADO);
+        jogo.setSituacaoManual(true);
+        jogoRepository.adicionar(jogo);
+
+        Optional<Jogo> resultado = useCase.executar(1, "disponivel");
+
+        assertThat(resultado).isPresent();
+        assertThat(resultado.get().getSituacao()).isEqualTo(Situacao.DISPONIVEL);
+        assertThat(resultado.get().isSituacaoManual()).isFalse();
+    }
+
+    @Test
+    void deveDesbloquearJogoVoltandoParaContratado() {
+        Jogo jogo = new Jogo(1, "Jogo A", 2024, 0.5, null, null);
+        jogo.setSituacao(Situacao.BLOQUEADO);
+        jogo.setSituacaoManual(true);
+        jogoRepository.adicionar(jogo);
+
+        Optional<Jogo> resultado = useCase.executar(1, "contratado");
+
+        assertThat(resultado).isPresent();
+        assertThat(resultado.get().getSituacao()).isEqualTo(Situacao.CONTRATADO);
+        assertThat(resultado.get().isSituacaoManual()).isFalse();
+    }
+
+    @Test
+    void deveDesbloquearJogoVoltandoParaObsoleto() {
+        Jogo jogo = new Jogo(1, "Jogo A", 2024, 0.5, null, null);
+        jogo.setSituacao(Situacao.BLOQUEADO);
+        jogo.setSituacaoManual(true);
+        jogoRepository.adicionar(jogo);
+
+        Optional<Jogo> resultado = useCase.executar(1, "obsoleto");
+
+        assertThat(resultado).isPresent();
+        assertThat(resultado.get().getSituacao()).isEqualTo(Situacao.OBSOLETO);
+        assertThat(resultado.get().isSituacaoManual()).isFalse();
+    }
 }

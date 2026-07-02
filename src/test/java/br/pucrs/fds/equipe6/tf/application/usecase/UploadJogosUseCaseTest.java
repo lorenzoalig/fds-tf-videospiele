@@ -3,6 +3,7 @@ package br.pucrs.fds.equipe6.tf.application.usecase;
 import br.pucrs.fds.equipe6.tf.domain.entity.Categoria;
 import br.pucrs.fds.equipe6.tf.domain.entity.Jogo;
 import br.pucrs.fds.equipe6.tf.domain.entity.Moeda;
+import br.pucrs.fds.equipe6.tf.domain.entity.Situacao;
 import br.pucrs.fds.equipe6.tf.domain.repository.ICategoriaRepository;
 import br.pucrs.fds.equipe6.tf.domain.repository.IJogoRepository;
 import br.pucrs.fds.equipe6.tf.domain.repository.IMoedaRepository;
@@ -104,6 +105,7 @@ class UploadJogosUseCaseTest {
         assertThat(jogoRepository.findAll().get(0).getNome()).isEqualTo("Jogo A");
         assertThat(jogoRepository.findAll().get(0).getCategoria().getNum()).isEqualTo(1);
         assertThat(jogoRepository.findAll().get(0).getMoeda().getCod()).isEqualTo(10);
+        assertThat(jogoRepository.findAll().get(0).getSituacao()).isEqualTo(Situacao.DISPONIVEL);
     }
 
     @Test
