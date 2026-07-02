@@ -1,10 +1,19 @@
 package br.pucrs.fds.equipe6.trab1;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+@Entity
 public class Moeda {
+
+    @Id
     private int cod;
     private String nome;
     private String simbolo;
     private double taxaParaReal;
+
+    public Moeda(){
+
+    }
 
     public Moeda(int cod, String nome, String simbolo, double taxaParaReal) {
         this.cod = cod;

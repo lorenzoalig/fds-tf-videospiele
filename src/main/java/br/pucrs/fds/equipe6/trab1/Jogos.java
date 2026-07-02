@@ -37,7 +37,7 @@ public class Jogos {
 
         for(Jogo jogo : jogos) {
 
-            // n sobrescreve se foi alterado manualmente 
+            // n sobrescreve se foi alterado manualmente
             if (jogo.isSituacaoManual()) continue;
 
             if(jogo.estaRemovido(contratos)) {

@@ -1,9 +1,22 @@
 package br.pucrs.fds.equipe6.trab1;
 
-// versão mínima/temporária — Alice vai expandir com herança (CartaoCredito, PIX)
-public class FormaPagamento {
+import jakarta.persistence.Id;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class FormaPagamento {
+
+    @Id
     private int num;
     private int diaVencimento;
+
+    public FormaPagamento(){
+
+    }
 
     public FormaPagamento(int num, int diaVencimento) {
         this.num = num;

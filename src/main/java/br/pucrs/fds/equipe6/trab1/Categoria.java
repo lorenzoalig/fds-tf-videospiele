@@ -1,14 +1,26 @@
 package br.pucrs.fds.equipe6.trab1;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Categoria {
 
+    @Id
     private  int num;
     private String nome;
     private double valorMinimo;
-    private List<Jogo> jogos;
 
+    @OneToMany(mappedBy = "categoria")
+    private List<Jogo> jogos = new ArrayList<>();
+
+    public Categoria(){
+
+    }
 
     public Categoria(int num, String nome, double valorMinimo) {
         this.num = num;
