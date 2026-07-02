@@ -27,8 +27,8 @@ public class Controller {
     private final IFormaPagamentoRepository formaPagamentoRepository;
 
     // USECASES
-    private final CalculaValorContratoUseCase calculaValorContratoUseCase;
-    private final ConsultarJogosPorSituacaoUseCase consultarJogosPorSituacaoUseCase;
+    private final ConsultaValorContratoUseCase consultaValorContratoUseCase;
+    private final ConsultaJogosPorSituacaoUseCase consultaJogosPorSituacaoUseCase;
     private final AtualizaSituacaoJogoUseCase atualizarSituacaoJogoUseCase;
     private final ConsultaCobrancaClienteUseCase consultaCobrancaClienteUseCase;
     private final AtualizaSituacaoJogosUseCase atualizaSituacaoJogosUseCase;
@@ -49,9 +49,9 @@ public class Controller {
         IContratoRepository contratoRepository,
         ICategoriaRepository categoriaRepository,
         IFormaPagamentoRepository formaPagamentoRepository,
-        ConsultarJogosPorSituacaoUseCase consultarJogosPorSituacaoUseCase,
+        ConsultaJogosPorSituacaoUseCase consultaJogosPorSituacaoUseCase,
         AtualizaSituacaoJogoUseCase atualizarSituacaoJogoUseCase,
-        CalculaValorContratoUseCase calculaValorContratoUseCase,
+        ConsultaValorContratoUseCase consultaValorContratoUseCase,
         ConsultaCobrancaClienteUseCase consultaCobrancaClienteUseCase,
         AtualizaSituacaoJogosUseCase atualizaSituacaoJogosUseCase,
         UploadClientesUseCase uploadClientesUseCase,
@@ -67,9 +67,9 @@ public class Controller {
         this.contratoRepository = contratoRepository;
         this.categoriaRepository = categoriaRepository;
         this.formaPagamentoRepository = formaPagamentoRepository;
-        this.consultarJogosPorSituacaoUseCase = consultarJogosPorSituacaoUseCase;
+        this.consultaJogosPorSituacaoUseCase = consultaJogosPorSituacaoUseCase;
         this.atualizarSituacaoJogoUseCase = atualizarSituacaoJogoUseCase;
-        this.calculaValorContratoUseCase = calculaValorContratoUseCase;
+        this.consultaValorContratoUseCase = consultaValorContratoUseCase;
         this.consultaCobrancaClienteUseCase = consultaCobrancaClienteUseCase;
         this.atualizaSituacaoJogosUseCase = atualizaSituacaoJogosUseCase;
         this.uploadClientesUseCase = uploadClientesUseCase;
@@ -148,7 +148,7 @@ public class Controller {
     // endpoint 5: Consultar jogos por situação
     @GetMapping("/consulta/jogossituacao/{situacao}")
     public List<Jogo> consultaJogoPorSituacao(@PathVariable String situacao) {
-        return consultarJogosPorSituacaoUseCase.executar(situacao);
+        return consultaJogosPorSituacaoUseCase.executar(situacao);
     }
 
     // endpoint 6: Cadastrar novo contrato
@@ -198,7 +198,7 @@ public class Controller {
     // endpoint 8: Calcular valor total de um contrato
     @GetMapping("/financeiro/consultatotalcontrato")
     public double calculaValorContrato(@RequestParam int id) {
-        return calculaValorContratoUseCase.executar(id);
+        return consultaValorContratoUseCase.executar(id);
     }
 
     // endpoint 9: Calcular cobrança total de um cliente

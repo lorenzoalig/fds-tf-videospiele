@@ -93,6 +93,7 @@ public class Uso {
     public void setContrato(Contrato contrato) {
         this.contrato = contrato;
     }
+
     public long getDuracaoMinutos() {
         // converte java.sql.Date para java.util.Date antes de usar toInstant
         java.util.Date dIni = new java.util.Date(dataInicio.getTime());
